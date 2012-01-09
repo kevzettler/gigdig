@@ -6,7 +6,7 @@ var argv = require('optimist').boolean('r').argv
    ,recursive_opt = (argv.r) ? true : false
    ,size_opt = (process.argv[4] in {'K':"",'M':"",'G':""}) ? process.argv[4] : 'G' 
    ,nc = require('ncurses')
-//   ,win = new nc.Window()
+   ,win = new nc.Window()
    ,fs = require('fs')
    ,util = require('util')
    ,spawn = require('child_process').spawn
@@ -17,6 +17,8 @@ var argv = require('optimist').boolean('r').argv
    ,children = []
    ;
 
+win.scrollok(true);
+win.idlok(true);
 
 function update_tree(dir, size, parent_tree){
     var dir_chunks = dir.split('/');
@@ -40,7 +42,7 @@ function update_tree(dir, size, parent_tree){
 }
 
 function render_tree(){
-    //win.clear();
+    win.clear();
     console.log('rendering tree');
     if(rendering == false){
 	rendering = true;
@@ -63,14 +65,16 @@ function render_paths(branch, level){
     }
     
     if(branch == tree && level == 0){ 
-//	win.print('/\n');
-//	nc.redraw();
+	win.print('/\n');
+	//nc.redraw();
+	win.refresh();
     }
     
     for (var prop in branch){
 	if(prop != 'size'){
-//	    win.print(indent+"/"+prop+" "+branch[prop]['size']+"\n");
-//	    nc.redraw();
+	    win.print(indent+"/"+prop+" "+branch[prop]['size']+"\n");
+	    //nc.redraw();
+	    win.refresh();
 	}
 
 	if(typeof branch[prop] == 'object'){
@@ -111,11 +115,10 @@ function killChildren(){
 }
 
 function shutdown(){
-    console.log("shutdown called");
     killChildren();
-    //win.close();
-    //nc.cleanup();
-    process.exit(0);
+    win.close();
+    nc.cleanup();
+    process.exit();
 }
 
 function crawl_dir(dir, recursive, size_opt){
@@ -141,7 +144,7 @@ function crawl_dir(dir, recursive, size_opt){
 }
 
 
-process.on('exit', shutdown);
+//process.on('exit', killChildren);
 process.on('uncaughtException', shutdown);
 process.on('SIGINT', shutdown);
 
