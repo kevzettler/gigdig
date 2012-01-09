@@ -12,9 +12,9 @@ var argv = require('optimist').boolean('r').argv
    ,rendering = false
    ,tree = {}
    ,render_string = ''
+   ,children = []
    ;
 
-console.log("opts?", argv._.length, dir_opt, recursive_opt, argv);
 
 function update_tree(dir, size, parent_tree){
     var dir_chunks = dir.split('/');
@@ -85,7 +85,9 @@ function render_paths(branch, level){
 
 function du_child(dir, size_opt){
   var du = spawn('du', ['-sh', dir]);
-  
+    
+  children.push(du);
+
   du.stdout.on('data', function(data){
       var data = data.toString()
           ,size = data.split("\t")[0];
@@ -98,6 +100,12 @@ function du_child(dir, size_opt){
   du.stderr.on('data', function(data){
       console.log('stderr: '+data);
   });
+}
+
+function killChildren(){
+    for(var i; i<children.length; i++){
+	children[i].kill('SIGTERM');
+    }
 }
 
 function crawl_dir(dir, recursive, size_opt){
@@ -122,4 +130,6 @@ function crawl_dir(dir, recursive, size_opt){
     }
 }
 
+
+process.on('exit', killChildren);
 crawl_dir(dir_opt, recursive_opt, size_opt);
