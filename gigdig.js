@@ -1,8 +1,9 @@
 #! /usr/local/bin/node
 
 
-var dir_opt = process.argv[2] 
-   ,recursive_opt = (process.argv[3] == 'true') ? true : false
+var argv = require('optimist').boolean('r').argv
+   ,dir_opt = argv._[argv._.length-1]
+   ,recursive_opt = (argv.r) ? true : false
    ,size_opt = (process.argv[4] in {'K':"",'M':"",'G':""}) ? process.argv[4] : 'G' 
    ,fs = require('fs')
    ,util = require('util')
@@ -13,6 +14,7 @@ var dir_opt = process.argv[2]
    ,render_string = ''
    ;
 
+console.log("opts?", argv._.length, dir_opt, recursive_opt, argv);
 
 function update_tree(dir, size, parent_tree){
     var dir_chunks = dir.split('/');
