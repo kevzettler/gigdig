@@ -5,6 +5,7 @@ A node.js cli tool to recursivlly crawl a disk and find directorys that take up 
 
 Instalation
 ====
+requires [node.js and npm](http://nodejs.org/#download)
 
 `sudo npm install -g gigdig`
 
