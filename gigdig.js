@@ -1,14 +1,20 @@
 #! /usr/local/bin/node
 
 
-var argv = require('optimist').boolean('r').argv
-   ,dir_opt = argv._[argv._.length-1]
+var optimist = require('optimist')
+    .boolean(['r', '?'])
+    .alias('?', 'help')
+    .usage('Find directories using lots of disk space\nUsage: $0 -r [path] ')
+    .describe('r', "Recursive")
+    .describe('_', "Root path to check")
+    .describe('?', "Display this help menu")
+   ,argv = optimist.argv
+   ,dir_opt = (typeof argv._[argv._.length-1] == 'string') ? argv._[argv._.length-1] : './'
    ,recursive_opt = (argv.r) ? true : false
    ,size_opt = (process.argv[4] in {'K':"",'M':"",'G':""}) ? process.argv[4] : 'G' 
-   ,nc = require('ncurses')
-   ,win = new nc.Window()
    ,fs = require('fs')
    ,util = require('util')
+   ,nc = require('ncurses')
    ,spawn = require('child_process').spawn
    ,exec = require('child_process').exec
    ,rendering = false
@@ -17,6 +23,14 @@ var argv = require('optimist').boolean('r').argv
    ,children = []
    ;
 
+if(argv['?'] || argv._.length == 0){
+    optimist.showHelp();
+    process.exit();
+}
+
+console.log(dir_opt);
+
+var win = new nc.Window()
 win.scrollok(true);
 win.idlok(true);
 
