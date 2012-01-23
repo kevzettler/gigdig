@@ -1,0 +1,28 @@
+{
+  "name": "gigdig",
+  "description": "recursivly find directories that take up a lot of space",
+  "keyworkds": [
+    "cli",
+    "recursive",
+    "directory",
+    "size"
+  ],
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kevzettler/gigdig.git"
+  },
+  "author": "Kev Zettler <kevzettler@gmail.com>",
+  "dependencies": {
+    "ncurses": ">= 0.2.4",
+    "optimist": ">= 0.3.1"
+  },
+  "bin": {
+    "gigdig": "./gigdig.js"
+  },
+  "preferGlobal": true,
+  "devDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
