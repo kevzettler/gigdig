@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/kevzettler/gigdig.png)](http://travis-ci.org/kevzettler/gigdig)
 GigDig
 ====
 
