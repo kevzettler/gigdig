@@ -1,9 +1,9 @@
 GigDig
 ====
 
-A node.js cli tool to recursivlly crawl a disk and find directorys that take up gigs of space. Helpful for finding stray directories that use up a lot of your hard drive. Spawns tons of `du` child processes. Probably horribly inefficent but gets the job done.
+A command line tool to recursively crawl a disk and find directories that take up gigs of space. Helpful for finding stray directories that use up a lot of your hard drive. 
 
-Instalation
+Installation
 ====
 requires [node.js and npm](http://nodejs.org/#download)
 
@@ -14,7 +14,7 @@ Usage
 ====
 
 ```bash
-$> gigdig
+$> gigdig -r /Users/
 ```
 
 

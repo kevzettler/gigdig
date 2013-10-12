@@ -1,13 +1,13 @@
 {
   "name": "gigdig",
-  "description": "recursivly find directories that take up a lot of space",
+  "description": "command line tool to recursively find directories that take up a lot of space",
   "keyworkds": [
     "cli",
     "recursive",
     "directory",
     "size"
   ],
-  "version": "0.0.4",
+  "version": "0.0.5",
   "repository": {
     "type": "git",
     "url": "git://github.com/kevzettler/gigdig.git"
